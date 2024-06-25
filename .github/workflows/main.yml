@@ -1,0 +1,72 @@
+# name: Deploy
+
+# on:
+#   push:
+#     branches: [ main ]
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Deploy
+#       uses: appleboy/ssh-action@v1.0.3
+#       with:
+#         host: ${{ secrets.HOST }}
+#         port: ${{ secrets.PORT }}
+#         username: ${{ secrets.USER }}
+#         password: ${{ secrets.PASSWORD }}
+#         script: |
+#           cd /home/u148999978/domains/scoduscorp.com/public_html/accounting
+#           git pull origin main
+#           php artisan migrate
+#           git status
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build # Adjust this command based on your build process, if needed
+
+      - name: Deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }} # Hostinger server IP or domain
+          port: ${{ secrets.PORT }} # SSH port
+          username: ${{ secrets.USER }} # SSH username
+          password: ${{ secrets.PASSWORD }} # Your SSH private key
+          script: |
+            cd /home/merovision/domains/aayush.merovision.com/public_html/
+            git pull origin main  # Pull the latest changes from your repository
+            npm install --production  # Install production dependencies
+            pm2 restart app.js  # Restart your Node.js application (assuming you use pm2 or similar)
+
+      - name: Check status
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            cd /path/to/your/nodejs/app
+            pm2 status  # Check the status of your Node.js application
