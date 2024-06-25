@@ -1,9 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const userRoutes = require("../src/features/auth/routes/auth.route");
-const errorHandler = require("../src/middlewares/errorHandler.middleware.js");
+const userRoutes = require("./src/features/auth/routes/auth.route");
+const errorHandler = require("./src/middlewares/errorHandler.middleware.js");
 require("dotenv").config();
-const sequelize = require("./config/db.config.js");
+const sequelize = require("./src/config/db.config.js");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
