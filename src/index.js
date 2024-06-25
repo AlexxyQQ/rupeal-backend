@@ -23,6 +23,14 @@ sequelize
 
 app.use("/api/users", userRoutes);
 
+app.get("/api/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    data: "Hello from the server",
+    message: "Server is running",
+  });
+});
+
 // Use the error handling middleware
 app.use(errorHandler);
 
