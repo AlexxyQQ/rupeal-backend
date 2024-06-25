@@ -50,6 +50,7 @@ jobs:
           password: ${{ secrets.PASSWORD }} # Your SSH private key
           script: |
             cd /home/merovision/domains/aayush.merovision.com/public_html/
+            git config --global --add safe.directory "/home/merovision/domains/aayush.merovision.com/public_html"
             git pull origin main  # Pull the latest changes from your repository
             npm install --production  # Install production dependencies
             pm2 restart app.js  # Restart your Node.js application (assuming you use pm2 or similar)
