@@ -41,12 +41,6 @@ jobs:
         with:
           node-version: "14"
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build # Adjust this command based on your build process, if needed
-
       - name: Deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -60,13 +54,13 @@ jobs:
             npm install --production  # Install production dependencies
             pm2 restart app.js  # Restart your Node.js application (assuming you use pm2 or similar)
 
-      - name: Check status
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.HOST }}
-          port: ${{ secrets.PORT }}
-          username: ${{ secrets.USER }}
-          password: ${{ secrets.PASSWORD }}
-          script: |
-            cd /path/to/your/nodejs/app
-            pm2 status  # Check the status of your Node.js application
+      # - name: Check status
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     port: ${{ secrets.PORT }}
+      #     username: ${{ secrets.USER }}
+      #     password: ${{ secrets.PASSWORD }}
+      #     script: |
+      #       cd /path/to/your/nodejs/app
+      #       pm2 status  # Check the status of your Node.js application
